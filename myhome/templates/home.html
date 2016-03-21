@@ -1,0 +1,39 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Bootstrap, from Twitter IIIIII</title>
+    <link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "extra/myhome.css" %}" rel="stylesheet">
+  </head>
+
+    <body>
+      <div class="container">
+        <div class="header clearfix">
+          <h3 class="text-muted">Empresa do cliente.</h3>
+        </div>
+
+        <div class="row marketing">
+          <div id="msgWarning" class="alert alert-warning" role="alert"
+            hidden="true"></div>
+
+          <div class="list-group" id="mntHome"></div>
+        </div>
+
+        <div class="form-group">
+          <a href="../index.html" class="btn btn-lg btn-default btn-block"
+            role="button" id="btnSair"><span class="glyphicon glyphicon-off"
+            aria-hidden="true"></span></a>
+        </div>
+        <footer class="footer">
+          <p>&copy; Terasoftware 2015</p>
+        </footer>
+
+      </div>
+
+      <!-- Le javascript ================================================== -->
+      <script src="{% static "jquery/jquery-1.12.2.min.js" %}"></script>
+      <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+
+    </body>
+</html>
