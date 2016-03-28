@@ -11,5 +11,6 @@ urlpatterns = [
 
     url(r'^$', core.views.home, name='home'),
     url(r'^home/', core.views.home, name='home'),
+    url(r'^core/', core.views.core, name='core'),
     url(r'^admin/', include(admin.site.urls)),
 ]

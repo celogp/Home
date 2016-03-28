@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+
+{% block content_app %}
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Procurar" name="q">
+            <div class="input-group-btn">
+                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+            </div>
+        </div>
+      </div>
+
+      <div class="panel-body">
+        <!-- Table -->
+          <table class="table table-bordered table-hover table-responsive">
+            <tbody>
+              <tr>
+                <td>Usuário</td>
+              </tr>
+              <tr>
+                <td>Localização</td>
+              </tr>
+              <tr>
+                <td>Parceiro Pessoa Física</td>
+              </tr>
+              <tr>
+                <td>Parceiro Pessoa Jurídica</td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}
