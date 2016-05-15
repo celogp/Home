@@ -1,50 +1,45 @@
-{% load staticfiles %}
+﻿{% load staticfiles %}
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
-    <link href="{% static "bootstrap/css/bootstrap-theme.min.css" %}" rel="stylesheet">
-    <link href="{% static "extra/myhome.css" %}" rel="stylesheet">
-  </head>
+<html>
+	<head>
+		<title>Home</title>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="{% static 'semantic/semantic.min.css' %}">
+		{% block css_base %}
+		{% endblock %}
+	</head>
 
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a href="{%url 'home'%}" class="navbar-brand">Project name</a>
-        </div>
-    
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Login</a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+  <body>
+		{% if form.errors %}
+				{% for field in form %}
+					{% if field.errors %}
+						{% for error in field.errors %}
+							<div class="ui negative message">
+								<i class="close icon"></i>
+								<div class="header">
+									{{ field.label_tag }}
+								</div>
+								<p>{{ error|escape }}</p>
+							</div>									
+						{% endfor %}
+					{% endif %}
+				{% endfor %}
+			{% if form.non_field_errors %}
+				<div class="ui negative message">
+					<i class="close icon"></i>
+					<p>{{ form.non_field_errors }}</p>
+				</div>									
+			{% endif %}
+		{% endif %}
+		
+		{% block content_base %}
+		{% endblock %}
 
-    <body>
-      <div class="container container-fluid">
-
-          {% block content_app %}
-          {% endblock %}
-
-      </div>
-
-
-      <!-- Le javascript ==================================================-->
-      <script src="{% static "jquery/jquery-1.12.2.min.js" %}"></script>
-      <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
-
-    </body>
-
-    <nav class="navbar navbar-default navbar-fixed-bottom">
-      <div class="container-fluid">
-        <a class="navbar-brand">Empresa desenvolvedora.</a>
-      </div>    
-    </nav>
+		<script src="{% static 'jquery/jquery-1.12.2.min.js' %}"></script>
+		<script src="{% static 'semantic/semantic.min.js' %}"></script>
+		<script src="{% static 'app/base.js' %}"></script>
+		{% block script_base%}
+		{% endblock %}
+	</body>
+	
 </html>

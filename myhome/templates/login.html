@@ -1,0 +1,45 @@
+﻿{% extends 'base.html' %}
+{% load staticfiles %}
+{% block css_base %}
+	<link rel="stylesheet" type="text/css" href="{% static 'app/myhome.css' %}">
+{% endblock %}		
+
+	
+{% block content_base %}
+			
+	<div class="ui middle aligned center aligned grid">
+		<div class="column">
+			<form class="ui large form" name="LoginForm" method="post">
+				{% csrf_token %}
+				<div class="ui stacked segment">
+					
+					<h2 class="ui teal image header">
+						<img src="{% static 'img/user.png' %}">
+					</h2>
+				
+					<div class="field">
+						<div class="ui left icon input">
+							<i class="user icon"></i>
+							<input type="text" name="username" placeholder="Usuário" id="username" value="{%if form.username.value %}{{ form.username.value }}{%endif%}">
+						</div>
+					</div>
+					
+					<div class="field">
+						<div class="ui left icon input">
+							<i class="lock icon"></i>
+							<input type="password" name="password" placeholder="Senha" 	id="password" value="{%if form.password.value %}{{ form.password.value }}{%endif%}">
+						</div>
+					</div>
+					<button class="ui fluid large teal button" type="submit">Login</button>
+					
+				</div>
+				
+			</form>
+			<div class="ui message">
+				Não é registrado ? <a href="#">Registre-se</a>
+			</div>
+		</div>
+	</div>
+
+	
+{% endblock %}

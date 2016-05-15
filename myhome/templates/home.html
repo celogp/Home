@@ -1,40 +1,41 @@
-{% extends 'base.html' %}
-{% load staticfiles %}
+﻿{% extends 'base.html' %}
 
+{% block content_base %}
+	<div class= "ui header">
+		<div class="ui large fixed menu">
+			<a class="item open">
+				<i class="list icon"></i>
+				Módulos
+			</a>
+			<a class="item right" href="{%url 'login'%}">
+				<i class="power icon"></i>
+				{% if user.is_authenticated %}
+					Bem vindo {{user.username}} 
+				{% endif %}
+			</a>
+		</div>		
+	</div>
+	<div class="ui left demo thin sidebar vertical icon menu">
+		<a class="item" href="{%url 'cadastros'%}">
+			<i class="block layout icon"></i>
+			Cadastros
+		</a>
+		<a class="item">
+			<i class="smile icon"></i>
+			Financeiro
+		</a>
+		<a class="item">
+			<i class="Configure icon"></i>
+			Configuração
+		</a>
+		
+	</div>		
+	
+	<!-- Site content !-->
+	<div class="pusher">
+		<p>
+		{% block content_home %}
+		{% endblock %}
+	</div>
 
-{% block content_app %}
-  <div class="row">
-      <div class="col-xs-6">
-        <div class="thumbnail">
-          <a href="{%url 'core'%}"><img src="{% static "img/home-base.png" %}" class="img-rounded"></a>
-          <div class="caption">
-             
-          <h3>App 1</h3>
-          </div>
-        </div>
-
-        <div class="thumbnail">
-          <a href="#"><img src="{% static "img/home-financeiro.jpg" %}" alt="..."class="img-rounded"></a>
-          <div class="caption">
-          <h3>App 2</h3>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-xs-6">
-        <div class="thumbnail">
-          <a href="#"><img src="{% static "img/home-estoque.jpg" %}" alt="..." class="img-rounded"></a>
-          <div class="caption">
-          <h3>App 3</h3>
-          </div>
-        </div>
-
-        <div class="thumbnail">
-          <a href="#"><img src="{% static "img/home-parametros.jpg" %}" alt="..." class="img-rounded"></a>
-          <div class="buttom">
-          <h3>App 4</h3>
-          </div>
-        </div>
-      </div>
-  </div>
 {% endblock %}
