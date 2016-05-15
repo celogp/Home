@@ -1,7 +1,6 @@
 ﻿from django.shortcuts import render, render_to_response
 from django.http import HttpResponseRedirect
 
-from models import User #you can use get_user_model
 from django.contrib.auth.forms import UserCreationForm # Formulario de criacao de usuarios
 from django.contrib.auth.forms import AuthenticationForm # Formulario de autenticacao de usuarios
 from django.contrib.auth import login, logout # funcao que salva o usuario na sessao
