@@ -14,7 +14,7 @@ from django.contrib.auth.decorators import login_required
 def login_user(request):
 	logout(request)
 	if request.method == 'POST':
-		print('passou no login por post')
+		#print('passou no login por post')
 		form = AuthenticationForm(data=request.POST) # Veja a documentacao desta funcao
 #		print(request.POST)
 		if form.is_valid():
@@ -36,7 +36,7 @@ def register_user(request):
 		
 		if form.is_valid(): # se o formulario for valido
 			form.save() # cria um novo usuario a partir dos dados enviados 
-			print('salvou ',form)
+			#print('salvou ',form)
 			return HttpResponseRedirect("/login/") # redireciona para a tela de login
 		else:
 			# mostra novamente o formulario de cadastro com os erros do formulario atual
