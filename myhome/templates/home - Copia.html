@@ -1,0 +1,56 @@
+﻿{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block css_base %}
+	<link rel="stylesheet" type="text/css" href="{% static 'semantic/semantic.min.css' %}">
+{% endblock %}
+
+{% block content_base %}
+
+	<div class= "ui header">
+		<div class="ui large top fixed menu">
+			<a class="item open">
+				<i class="list icon"></i>
+				Módulos
+			</a>
+			<a class="item right" href="{%url 'login'%}">
+				<i class="power icon"></i>
+				{% if user.is_authenticated %}
+					Bem vindo {{user.username}} 
+				{% endif %}
+			</a>
+		</div>		
+	</div>
+	<div class="ui left demo thin sidebar vertical labeled icon menu">
+		<a class="item" href="{%url 'cadastros'%}">
+			<i class="block layout icon"></i>
+			Cadastros
+		</a>
+		<a class="item">
+			<i class="smile icon"></i>
+			Financeiro
+		</a>
+		<a class="item">
+			<i class="Configure icon"></i>
+			Configuração
+		</a>
+	</div>		
+	
+	<!-- Site content !-->
+	<div class="pusher">
+		<p>
+		conteudo da pagina
+		{% block content_home %}
+		{% endblock %}
+	</div>
+	
+	{% block script_base%}
+			<script src="{% static 'jquery/jquery-1.12.2.min.js' %}"></script>
+			<script src="{% static 'semantic/semantic.min.js' %}"></script>
+			<script src="{% static 'app/base.js' %}"></script>
+			<!-- 
+			!-->
+	{% endblock %}
+
+
+{% endblock %}
