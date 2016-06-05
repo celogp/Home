@@ -82,7 +82,7 @@ def frmtitulos(request, pk):
 			#print('form invalido')
 			data_json = {'row': 'erro'}
 			#return JsonResponse(data_json)
-			
+
 	ctx['form'] = form
 	#print('passando no fim')
 	return render(request, template_name, ctx)
