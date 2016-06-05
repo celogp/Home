@@ -1,7 +1,6 @@
 ﻿{% extends 'home.html' %} 
 
 {% block content_home %}
-
 	<form class="ui large form error" action="" method="post" name="FrmTitulos" id="FrmTitulos">
 		{% csrf_token %}
 		<div class="ui segment">
@@ -15,13 +14,10 @@
 				</div>
 			</div>
 		</div>
-		
 		<div class="six wide field required">
       <label>Descrição</label>
 			<input type="text" placeholder="Descrição" name="descricao" id="Titulo_descricao" value="{{ form.descricao.value }}">
     </div>
-		
 		<button class="ui button" type= "submit" id="btnSalvarTitulo">Salvar</button>
-		
 	</form>
 {% endblock %}
