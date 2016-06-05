@@ -1,14 +1,14 @@
-﻿from django.shortcuts import render, render_to_response
-from django.http import HttpResponseRedirect
+﻿from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 
 from django.contrib.auth.forms import UserCreationForm # Formulario de criacao de usuarios
 from django.contrib.auth.forms import AuthenticationForm # Formulario de autenticacao de usuarios
 from django.contrib.auth import login, logout # funcao que salva o usuario na sessao
 
 from django.contrib.auth.decorators import login_required
-#from django.contrib.auth import authenticate, login, logout
-#from django.contrib.auth.forms import AuthenticationForm
-#from core.forms import LoginForm
+from core.models import Titulo
+from core.forms import TituloForm
+
 
 #Login de usuário
 def login_user(request):
@@ -29,26 +29,60 @@ def login_user(request):
 
 #Registro de usuário
 def register_user(request):
-# Se dados forem passados via POST
 	if request.method == 'POST':
 		form = UserCreationForm(request.POST)
-#		print(request.POST)
-		
 		if form.is_valid(): # se o formulario for valido
 			form.save() # cria um novo usuario a partir dos dados enviados 
-			#print('salvou ',form)
 			return HttpResponseRedirect("/login/") # redireciona para a tela de login
 		else:
-			# mostra novamente o formulario de cadastro com os erros do formulario atual
-#			print('nao salvou',form)
 			return render(request, "register.html", {"form": form})
-	# se nenhuma informacao for passada, exibe a pagina de cadastro com o formulario
 	return render(request, "register.html", {"form": UserCreationForm() })
 
 @login_required(login_url='/')
 def home(request):
-	return render(request, 'home.html')
+	template_name = 'home.html'
+	return render(request, template_name)
 
 @login_required(login_url='/')
 def cadastros(request):
-	return render(request, 'cadastros.html')
+	template_name = 'cadastros.html'
+	return render(request, template_name)
+	
+@login_required(login_url='/')
+def pestitulos(request):
+	template_name = 'pestitulos.html'
+	titulos = Titulo.objects.all()
+	ctx = {}
+	ctx['titulos'] = titulos
+	return render(request, template_name, ctx)
+
+@login_required(login_url='/')
+def frmtitulos(request, pk):
+	template_name='frmtitulos.html'
+	ctx = {}
+	if (pk != 0):
+		titulo = get_object_or_404(Titulo, pk=pk)
+	form = TituloForm(request.POST or None, instance=titulo)
+	"""
+	if request.method == 'POST' and form.is_valid():
+		form.save()
+		print('form valido')
+	"""
+	
+#	if request.method == 'POST' and request.is_ajax():
+	if request.method == 'POST':
+		#print('passou no ajax' )
+		if form.is_valid():
+			form.save()
+			#print('form valido')
+			data_json = {'row':'Ok'}
+			#print(data_json)
+			#return JsonResponse(data_json)
+		else:
+			#print('form invalido')
+			data_json = {'row': 'erro'}
+			#return JsonResponse(data_json)
+			
+	ctx['form'] = form
+	#print('passando no fim')
+	return render(request, template_name, ctx)

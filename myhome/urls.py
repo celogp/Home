@@ -9,5 +9,7 @@ urlpatterns = [
 	#url(r'^register/', core.views.register_user, name='register'),
 	url(r'^home/', core.views.home, name='home'),
 	url(r'^cadastros/', core.views.cadastros, name='cadastros'),
+	url(r'^pestitulos/', core.views.pestitulos, name='pestitulos'),
+	url(r'^frmtitulos/(?P<pk>\d+)$', core.views.frmtitulos, name='frmtitulos'),
 	url(r'^admin/', include(admin.site.urls)),
 ]
