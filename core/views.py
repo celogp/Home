@@ -61,7 +61,8 @@ def frmtitulos(request, pk):
 	template_name='frmtitulos.html'
 	ctx = {}
 	if (pk != 0):
-		titulo = get_object_or_404(Titulo, pk=pk)
+		titulo = Titulo.objects.get(id=pk)
+		#get_object_or_404(Titulo, pk=pk)
 	form = TituloForm(request.POST or None, instance=titulo)
 	"""
 	if request.method == 'POST' and form.is_valid():
