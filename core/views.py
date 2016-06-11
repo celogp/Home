@@ -60,15 +60,12 @@ def pestitulos(request):
 def frmtitulos(request, pk):
 	template_name='frmtitulos.html'
 	ctx = {}
-	if (pk != 0):
+	try:
 		titulo = Titulo.objects.get(id=pk)
-		#get_object_or_404(Titulo, pk=pk)
+	except Titulo.DoesNotExist:
+		titulo = None
+		
 	form = TituloForm(request.POST or None, instance=titulo)
-	"""
-	if request.method == 'POST' and form.is_valid():
-		form.save()
-		print('form valido')
-	"""
 	
 #	if request.method == 'POST' and request.is_ajax():
 	if request.method == 'POST':
