@@ -51,8 +51,16 @@ def cadastros(request):
 @login_required(login_url='/')
 def pestitulos(request):
 	template_name = 'pestitulos.html'
-	titulos = Titulo.objects.all()
 	ctx = {}
+	print (request)
+	if ('filter_text' in request.GET):
+		value = request.GET['filter_text']
+		titulos = Titulo.objects.filter(descricao__icontains=value)
+		data = {'rows' : list(titulos.values('id', 'descricao'))}
+		print (data)
+		return JsonResponse(data)
+	else:
+		titulos = Titulo.objects.all().order_by('-id')
 	ctx['titulos'] = titulos
 	return render(request, template_name, ctx)
 
@@ -60,27 +68,28 @@ def pestitulos(request):
 def frmtitulos(request, pk):
 	template_name='frmtitulos.html'
 	ctx = {}
-	try:
-		titulo = Titulo.objects.get(id=pk)
-	except Titulo.DoesNotExist:
-		titulo = None
-		
-	form = TituloForm(request.POST or None, instance=titulo)
+	print('pk ' + pk)
+	if int(pk)>0:
+		form = TituloForm(request.POST or None, instance=Titulo.objects.get(id=pk))
+	else:
+		form = TituloForm(request.POST or None)
 	
-#	if request.method == 'POST' and request.is_ajax():
 	if request.method == 'POST':
-		#print('passou no ajax' )
+		print(form)
 		if form.is_valid():
+			print('salvou')
 			form.save()
-			#print('form valido')
-			data_json = {'row':'Ok'}
-			#print(data_json)
-			#return JsonResponse(data_json)
 		else:
-			#print('form invalido')
-			data_json = {'row': 'erro'}
-			#return JsonResponse(data_json)
+			print ('invalido')
+			print (form.errors)
+			html = form.errors.as_ul()
+			print (html)
+			return HttpResponse(html, status=406)
+	else:
+		print('passou no get')
+		if int(pk)==0:
+			form = ctx
 
 	ctx['form'] = form
-	#print('passando no fim')
+		
 	return render(request, template_name, ctx)

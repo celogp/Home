@@ -1,13 +1,18 @@
 /*
   MyHome
-  Para poder centralizar sem o menu principal.
+  Para poder centralizar sem o menu principal em material design
 */
 body > .grid {
 	height: 100%;
 }
+
 .image {
 	margin-top: -100px;
 }
 .column {
 	max-width: 400px;
+}
+
+body.pushable>.pusher {
+ background: 'xxxx'
 }

@@ -9,6 +9,7 @@ $(document).ready(function () {
 			}
 	});
 	
+
 	$('.left.demo.sidebar').first()
 		.sidebar('attach events', '.open.item', 'show')
 		.sidebar('setting', 'transition', 'overlay')
@@ -20,6 +21,19 @@ $(document).ready(function () {
 
 	$('.ui.search')
 		.search({
+			debug: false,
+			apiSettings: {
+			action:'search',
+      url: '?filter_text={query}', 
+			onResponse: function(Response) {
+				console.log(Response)
+			}
+			},
+			fields: {
+				results : 'rows',
+				title   : 'descricao'
+			},
+			cache: false,
 			minCharacters : 3
 		})
 	;
@@ -42,28 +56,38 @@ $(document).ready(function () {
 	/* 
 		botões de formulários
 	$('#btnLogin').on('click', function() { onFazerLogin(); });
-	$('#btnSalvarTitulo').on('click', function() { onSalvarForm($('#FrmTitulos')); });
 	*/
+	$('#btnSalvarTitulo').on('click', function() { onSalvarForm($('#FrmTitulos')); });
+	$('#btnPesTitulos').on('click', function() { onPesTitulos($('#btnPesTitulos')); });
 });
 
 
 function onSalvarForm(frm){
-	frm.submit(function () {
-			event.preventDefault();
-			$.ajax({
-					type: 'POST',
-					url: window.location.href,
-					data: frm.serialize(),
-					success: function (data) {
-						console.log ('passou no suscesso')
-						console.log (data)
-					},
-					error: function(data) {
-						console.log ('passou no false')
-						console.log (data)
-					}
+	console.log ('ponto 1');
+			/*
+			dessa forma faz validação
+			*/
+			frm.submit(function (e) {
+					e.preventDefault();
+					$.ajax({
+							type: 'POST',
+							url: window.location.href,
+							data: frm.serialize(),
+							cache: false,
+							success: function (data) {
+								console.log ('passou no suscesso')
+								$( "#ajaxerrors" ).addClass( "hidden" );
+							},
+							error: function(data) {
+								console.log ('passou na falha forçada');
+								$( "#ajaxerrors" ).removeClass( "hidden" );
+								$("#ajaxerrors").html(data.responseText);
+
+							}
+					});
+					console.log('fim do ajax');
 			});
-	});
+			
 	return false;
 };
 
@@ -118,6 +142,29 @@ function onFazerLogin(){
 			//return false;
 	});
 	
+	return true;
+};
+
+function onPesTitulos(){
+	var txtTitulo = $('#txtTitulo').val(),
+		parAction = 'pestitulos/',
+		parDados = '?filter_text=' + txtTitulo
+		
+	console.log(parDados);
+	$.ajax({
+			type: 'POST',
+			url: parAction+parDados,
+			data: parDados,
+			success: function (data) {
+				console.log ('passou no suscesso')
+				console.log (data)
+				$('#lisTitulos').html(data);
+				
+			},
+			error: function(data) {
+					console.log ('passou no false')
+			}
+	});
 	return true;
 };
 

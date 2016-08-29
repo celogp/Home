@@ -11,28 +11,33 @@
 				<h1 class="ui center aligned">Pesquisa de títulos</h1>		
 			</div>	
 			<div class="six wide tablet eight wide computer column">
-				<div class="ui search">
-					<div class="ui right icon input fluid">
-						<input class="prompt" type="text" placeholder="Pesquisa" >
+				<!--
+				<div class="ui fluid search focus">
+					<div class="ui fluid right icon input">
+						<input class="prompt" type="text" placeholder="Pesquisa" name="search_text">
 						<i class="Search icon"></i>
 					</div>
 				</div>
-
+				
+				<div class="ui icon input">
+					<input type="text" placeholder="Search..." id="txtTitulo">
+					<i class="circular search link icon" id="btnPesTitulos"></i>
+				</div>
+				-->
+				<a class="ui button" href="{%url 'cadastros' %}" >Cadastros</a>
+				
 			</div>
-			
 		</div>
-
 	</div>
-
 	</div>
-
-
+	
 	<div class="ui divided selection list">
 			{% for tit in titulos %}
 				<a class="item" href="{%url 'frmtitulos' tit.id %}">
-				 {{ tit.descricao }}
+					{{ tit.descricao }}
 				</a>
 			{% endfor %}
 	</div>
-
+	
+	
 {% endblock %}

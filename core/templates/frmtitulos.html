@@ -1,7 +1,10 @@
 ﻿{% extends 'home.html' %} 
 
 {% block content_home %}
-	<form class="ui large form error" action="" method="post" name="FrmTitulos" id="FrmTitulos">
+	<div class="ui negative message close icon hidden" id="ajaxerrors"></div>
+	
+
+	<form class="ui form large" name="FrmTitulos" id="FrmTitulos">
 		{% csrf_token %}
 		<div class="ui segment">
 			<div class="ui equal width grid">
@@ -10,14 +13,18 @@
 						<h1 class="ui center aligned">Cadastro de títulos</h1>		
 					</div>	
 					<div class="six wide tablet eight wide computer column">
+							<button class="ui button" id="btnSalvarTitulo">Salvar</button>
+							<a class="ui button" href="{%url 'pestitulos' %}" >Apagar</a>
+							<a class="ui button" href="{%url 'pestitulos' %}" >Pesquisar</a>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="six wide field required">
       <label>Descrição</label>
-			<input type="text" placeholder="Descrição" name="descricao" id="Titulo_descricao" value="{{ form.descricao.value }}">
+			<input type="text" placeholder="Descrição" name="descricao" id="Titulo_descricao" value="{{form.descricao.value}}">
+
     </div>
-		<button class="ui button" type= "submit" id="btnSalvarTitulo">Salvar</button>
+		
 	</form>
 {% endblock %}

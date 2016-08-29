@@ -1,43 +1,67 @@
 ﻿{% extends 'base.html' %}
 {% load staticfiles %}
 {% block content_base %}
-	<div class="ui left demo thin sidebar vertical labeled icon menu">
-		<a class="item" href="{%url 'home'%}">
-			<i class="Home icon"></i>
-			Home
-		</a>
+	{% if user.is_authenticated %}
+		<div class="ui left demo thin sidebar vertical labeled icon menu">
+			<a class="item" href="{%url 'home'%}">
+				<i class="Home icon"></i>
+				Home
+			</a>
 
-		<a class="item">
-			<i class="Configure icon"></i>
-			Configuração
-		</a>
-		<a class="item" href="{%url 'cadastros'%}">
-			<i class="block layout icon"></i>
-			Cadastros
-		</a>
-		<a class="item">
-			<i class="smile icon"></i>
-			Financeiro
-		</a>
-	</div>		
-	<div class="ui menu top fixed">
-		<a class="item open">
-			<i class="list icon"></i>
-			Módulos
-		</a>
-		<a class="item right" href="{%url 'login'%}">
-			<i class="power icon"></i>
-			{% if user.is_authenticated %}
+			<a class="item">
+				<i class="Configure icon"></i>
+				Configuração
+			</a>
+			<a class="item" href="{%url 'cadastros'%}">
+				<i class="block layout icon"></i>
+				Cadastros
+			</a>
+			<a class="item">
+				<i class="smile icon"></i>
+				Financeiro
+			</a>
+		</div>		
+		<div class="ui menu top fixed">
+			<a class="item open">
+				<i class="list icon"></i>
+				Módulos
+			</a>
+			<a class="item right" href="{%url 'login'%}">
+				<i class="power icon"></i>
 				{{user.username}}, Bem vindo !.
-			{% endif %}
-		</a>
-	</div>		
-	<!-- Site content !-->
+			</a>
+		</div>		
+	{% endif %}
+	
 	<div class="pusher">
 		<div class="ui basic segment">
-		</div>		
+		</div>
+		{% if form.errors %}
+				{% for field in form %}
+					{% if field.errors %}
+						{% for error in field.errors %}
+							<div class="ui negative message">
+								<i class="close icon"></i>
+								<div class="header">
+									{{ field.label_tag }}
+								</div>
+								<p>{{ error|escape }}</p>
+							</div>									
+						{% endfor %}
+					{% endif %}
+				{% endfor %}
+				
+				{% if form.non_field_errors %}
+					<div class="ui negative message">
+						<i class="close icon"></i>
+						<p>{{ form.non_field_errors }}</p>
+					</div>									
+				{% endif %}
+		{% endif %}
+		
 		{% block content_home %}
 				<h2 class="center"> conteudo da telas dos módulos </h2>
 		{% endblock %}
-	</div>
+		</div>
+
 {% endblock %}

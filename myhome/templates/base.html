@@ -14,27 +14,6 @@
 		{% endblock %}
 	</head>
   <body>
-		{% if form.errors %}
-				{% for field in form %}
-					{% if field.errors %}
-						{% for error in field.errors %}
-							<div class="ui negative message">
-								<i class="close icon"></i>
-								<div class="header">
-									{{ field.label_tag }}
-								</div>
-								<p>{{ error|escape }}</p>
-							</div>									
-						{% endfor %}
-					{% endif %}
-				{% endfor %}
-			{% if form.non_field_errors %}
-				<div class="ui negative message">
-					<i class="close icon"></i>
-					<p>{{ form.non_field_errors }}</p>
-				</div>									
-			{% endif %}
-		{% endif %}
 		{% block content_base %}
 		{% endblock %}
 		<!-- -->
