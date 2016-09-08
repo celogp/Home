@@ -5,11 +5,15 @@
 		<title>Home</title>
 		<!-- Standard Meta -->
 		<meta charset="utf-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="{% static 'semantic/semantic.min.css' %}">
+		
 		<script src="{% static 'jquery/jquery-1.12.2.min.js' %}"></script>
+		<script src="http://malsup.github.com/jquery.form.js"></script> 
+		
 		<script src="{% static 'semantic/semantic.min.js' %}"></script>
+		
 		{% block css_base %}
 		{% endblock %}
 	</head>
@@ -17,8 +21,8 @@
 		{% block content_base %}
 		{% endblock %}
 		<!-- -->
-		<script src="{% static 'app/base.js' %}"></script>
-		{% block script_base%}
-		{% endblock %}
 	</body>
+	<script src="{% static 'app/base.js' %}"></script>
+	{% block script_base%}
+	{% endblock %}
 </html>

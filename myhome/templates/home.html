@@ -30,37 +30,33 @@
 				<i class="power icon"></i>
 				{{user.username}}, Bem vindo !.
 			</a>
-		</div>		
+		</div>
 	{% endif %}
 	
 	<div class="pusher">
+		<!--
 		<div class="ui basic segment">
 		</div>
-		{% if form.errors %}
-				{% for field in form %}
-					{% if field.errors %}
-						{% for error in field.errors %}
-							<div class="ui negative message">
-								<i class="close icon"></i>
-								<div class="header">
-									{{ field.label_tag }}
-								</div>
-								<p>{{ error|escape }}</p>
-							</div>									
-						{% endfor %}
-					{% endif %}
-				{% endfor %}
-				
-				{% if form.non_field_errors %}
-					<div class="ui negative message">
-						<i class="close icon"></i>
-						<p>{{ form.non_field_errors }}</p>
-					</div>									
-				{% endif %}
-		{% endif %}
+		-->
+		<p>.
+
+		<div class="ui negative message hidden" id="ajaxmsgerro">
+			<i class="close icon"></i>
+			<div id="ajaxerrors"></div>
+		</div>									
+		<div class="ui success message hidden" id="ajaxmsgsucesso">
+			<i class="close icon"></i>
+			<div id="ajaxsucesso"></div>
+		</div>									
 		
 		{% block content_home %}
-				<h2 class="center"> conteudo da telas dos módulos </h2>
+			<h2 class="ui center aligned icon header">
+				<i class="circular users icon"></i>
+				Amigos
+			</h2>		
+			
+			
+				
 		{% endblock %}
 		</div>
 

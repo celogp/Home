@@ -1,30 +1,35 @@
 ﻿{% extends 'home.html' %} 
 
 {% block content_home %}
-	<div class="ui negative message close icon hidden" id="ajaxerrors"></div>
-	
-
-	<form class="ui form large" name="FrmTitulos" id="FrmTitulos">
-		{% csrf_token %}
-		<div class="ui segment">
-			<div class="ui equal width grid">
-				<div class="four column row">
-					<div class="six wide tablet eight wide computer column">
-						<h1 class="ui center aligned">Cadastro de títulos</h1>		
-					</div>	
-					<div class="six wide tablet eight wide computer column">
-							<button class="ui button" id="btnSalvarTitulo">Salvar</button>
-							<a class="ui button" href="{%url 'pestitulos' %}" >Apagar</a>
-							<a class="ui button" href="{%url 'pestitulos' %}" >Pesquisar</a>
+	<div class="ui right aligned grid">
+		<div class="left floated left aligned six wide column">
+			<h1>Cadastro de Titulos.</h1>
+		</div>
+		<div class="right floated right aligned six wide column">
+				<div class="ui buttons">
+					<div type="button" class="ui button" id="SalvarTitulo">Salvar</div>
+					<div class="ui floating dropdown icon button">
+						<i class="dropdown icon"></i>
+						<div class="menu">
+							<a class="item" id="ListarTitulo" href="{%url 'pestitulos'%}">Pesquisar</a>
+							<a class="item" id="ApagarTitulo">Apagar</a>
+						</div>
 					</div>
 				</div>
-			</div>
+				
 		</div>
-		<div class="six wide field required">
-      <label>Descrição</label>
-			<input type="text" placeholder="Descrição" name="descricao" id="Titulo_descricao" value="{{form.descricao.value}}">
-
+	</div>
+	<div class="ui divider"></div>	
+	
+	<form class="ui form large" name="FrmTitulos" id="FrmTitulos" method=""  action="">
+		{% csrf_token %}
+		<div class="fields">
+			<div class="six wide field required">
+				<label>Descrição</label>
+				<input type="text" placeholder="Descrição" name="descricao" id="Titulo_descricao" value="{{form.descricao.value}}">
+			</div>
     </div>
 		
 	</form>
+	
 {% endblock %}

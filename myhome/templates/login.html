@@ -6,7 +6,7 @@
 {% block content_home %}
 	<div class="ui middle aligned center aligned grid">
 		<div class="column">
-			<form class="ui large form" name="LoginForm" method="post">
+			<form class="ui large form" id="FrmLogin" action="">
 				{% csrf_token %}
 				<div class="ui stacked segment">
 					<h2 class="ui teal header">
@@ -21,10 +21,10 @@
 					<div class="field">
 						<div class="ui left icon input">
 							<i class="lock icon"></i>
-							<input type="password" name="password" placeholder="Senha" 	id="password" value="{%if form.password.value %}{{ form.password.value }}{%endif%}">
+							<input type="password" name="password" placeholder="Senha" id="password" value="{%if form.password.value %}{{ form.password.value }}{%endif%}">
 						</div>
 					</div>
-					<button class="ui fluid large teal button" type="submit">Login</button>
+					<button type="button" class="ui fluid large teal button" id="FazerLogin">Login</button>
 				</div>
 			</form>
 			<div class="ui message">

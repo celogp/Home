@@ -1,43 +1,31 @@
 ﻿{% extends 'home.html' %}
 
 {% block content_home %}
-					
-	<div class="ui segment">
-		 
-	<div class="ui equal width grid">
-		
-		<div class="four column row">
-			<div class="six wide tablet eight wide computer column">
-				<h1 class="ui center aligned">Pesquisa de títulos</h1>		
-			</div>	
-			<div class="six wide tablet eight wide computer column">
-				<!--
-				<div class="ui fluid search focus">
-					<div class="ui fluid right icon input">
-						<input class="prompt" type="text" placeholder="Pesquisa" name="search_text">
-						<i class="Search icon"></i>
-					</div>
-				</div>
+	<div class="ui right aligned grid">
+		<div class="left floated left aligned six wide column">
+			<h1>Pesquisa de Titulos.</h1>
+		</div>
+		<div class="right floated right aligned six wide column">
+				<div class="ui action input">
+					<input type="text" type=”submit” placeholder="Conteudo..." id="txtConteudo">
+					<button class="ui icon button" id="PesquisarTitulos">
+							<i class="search icon"></i>
+					</button>
+				</div>			
+			<a href="{%url 'cadastros'%}">
+				<button class="ui button" id="ListarCadastro">Cadastros</button>
+			</a>
 				
-				<div class="ui icon input">
-					<input type="text" placeholder="Search..." id="txtTitulo">
-					<i class="circular search link icon" id="btnPesTitulos"></i>
-				</div>
-				-->
-				<a class="ui button" href="{%url 'cadastros' %}" >Cadastros</a>
-				
-			</div>
 		</div>
 	</div>
-	</div>
+	<div class="ui divider"></div>	
 	
-	<div class="ui divided selection list">
-			{% for tit in titulos %}
-				<a class="item" href="{%url 'frmtitulos' tit.id %}">
-					{{ tit.descricao }}
-				</a>
-			{% endfor %}
-	</div>
+	<div id="results">
+		{% include 'restitulos.html' %}
+	</div>	
+	<div class="ui divider"></div>	
+	
+
 	
 	
 {% endblock %}

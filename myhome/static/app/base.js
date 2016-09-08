@@ -1,14 +1,13 @@
-﻿var csrftoken = getCookie('csrftoken');
+﻿$(document).ready(function () {
+	var csrftoken = getCookie('csrftoken');
 
-$(document).ready(function () {
 	$.ajaxSetup({
-			beforeSend: function(xhr, settings) {
-					if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-							xhr.setRequestHeader("X-CSRFToken", csrftoken);
-					}
+		beforeSend: function(xhr, settings) {
+			if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+					xhr.setRequestHeader("X-CSRFToken", csrftoken);
 			}
+		}
 	});
-	
 
 	$('.left.demo.sidebar').first()
 		.sidebar('attach events', '.open.item', 'show')
@@ -53,99 +52,123 @@ $(document).ready(function () {
 		})
 	;
 	
+	$('.ui.accordion')
+		.accordion()
+	;
+	
 	/* 
 		botões de formulários
-	$('#btnLogin').on('click', function() { onFazerLogin(); });
 	*/
-	$('#btnSalvarTitulo').on('click', function() { onSalvarForm($('#FrmTitulos')); });
-	$('#btnPesTitulos').on('click', function() { onPesTitulos($('#btnPesTitulos')); });
+	$('#FazerLogin').on('click', function() { onSubmitFormLogin($('#FrmLogin')); });
+	
+	$('#SalvarTitulo').on('click', function() { onSubmitForm($('#FrmTitulos'), 'POST'); });
+	$('#ApagarTitulo').on('click', function() { onSubmitForm($('#FrmTitulos'), 'DELETE'); });
+	$('#PesquisarTitulos').on('click', function() { onPesTitulos($('#PesquisarTitulos')); });
+	
 });
 
+function getCookie(name) {
+	var cookieValue = null;
+	if (document.cookie && document.cookie != '') {
+			var cookies = document.cookie.split(';');
+			for (var i = 0; i < cookies.length; i++) {
+					var cookie = jQuery.trim(cookies[i]);
+					// Does this cookie string begin with the name we want?
+					if (cookie.substring(0, name.length + 1) == (name + '=')) {
+							cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+							break;
+					}
+			}
+	}
+  return cookieValue;
+};
 
-function onSalvarForm(frm){
-	console.log ('ponto 1');
-			/*
-			dessa forma faz validação
-			*/
-			frm.submit(function (e) {
-					e.preventDefault();
-					$.ajax({
-							type: 'POST',
-							url: window.location.href,
-							data: frm.serialize(),
-							cache: false,
-							success: function (data) {
-								console.log ('passou no suscesso')
-								$( "#ajaxerrors" ).addClass( "hidden" );
-							},
-							error: function(data) {
-								console.log ('passou na falha forçada');
-								$( "#ajaxerrors" ).removeClass( "hidden" );
-								$("#ajaxerrors").html(data.responseText);
+function csrfSafeMethod(method) {
+	return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+};
 
-							}
-					});
-					console.log('fim do ajax');
-			});
+function setMsg(msg, opc) {
+	if (opc == 'success') {
+		$("#ajaxmsgsucesso").removeClass( 'hidden' );
+		$('#ajaxsucesso').html(msg);
+		setTimeout( function() {
+			$("#ajaxmsgsucesso").addClass( 'hidden' );	
+			$('#ajaxsucesso').html();
 			
+		}
+		, 1000);
+	} else if (opc == 'danger') {
+		$("#ajaxmsgerro").removeClass( 'hidden' );
+		$('#ajaxerrors').html(msg);
+		setTimeout( function() {
+			$("#ajaxmsgerro").addClass( 'hidden' );	
+			$('#ajaxmsgerro').html();
+		}
+		, 3000);
+	}
 	return false;
 };
 
-function onFazerLogin(){
-	var usuarioLogin = $('#username').val(),
-		usuarioSenha = $('#password').val();
-		parLoginAction = 'login/',
-		parLoginDados = JSON.stringify( { username: usuarioLogin, password: usuarioSenha } )
-		
-	console.log (usuarioLogin);
-	console.log (usuarioSenha);
-	console.log (csrftoken);
-/*	
-	$.ajax({
-		url: parLoginAction,
-		type: 'post',
-		data: {acao:parLoginAction, dados:parLoginDados},
-	success: function(jsonData) {
-		console.log(jsonData);
-		console.log(jsonData.dados.username);
-		console.log(jsonData.dados.password);
-		console.log(jsonData.acao.status);
-		console.log(jsonData.acao.mensagem);
-		if (jsonData.acao.status == 'true') {
-			console.log('verdadeiro');
-		}
-		location.href="home/";
-	},
-	failure: function(data) { 
-		$("#msgWarning")[0].innerHTML = 'não cadastrado';
-		$(".alert-warning").fadeTo(0, 1);
-		$(".alert-warning").fadeTo(2000, 0).slideUp(1000, function(){
-			$(this).hide(); 
-		});			
+function onSubmitForm(frm, verbo){
+	if (verbo == null || verbo == undefined){
+		verbo = 'POST';
 	}
-	}); 
-	*/
-	var frm = $('#LoginForm');
-	console.log(frm);
-	frm.submit(function () {
-			$.ajax({
-					type: 'POST',
-					url: parLoginAction,
-					data: frm.serialize(),
-					success: function (data) {
-						console.log ('passou no suscesso')
-					},
-					error: function(data) {
-							console.log ('passou no false')
-					}
-			});
-			//return false;
-	});
-	
-	return true;
+	$.ajax({
+			type: verbo,
+			url: window.location.href,
+			data: frm.serialize(),
+			cache: false,
+			success: function (data) {
+				if (verbo == 'DELETE') {
+					setMsg('Registro apagado com sucesso.', 'success');
+				}else{
+					setMsg('Registro salvo com sucesso.', 'success');
+				}
+			},
+			error: function(data) {
+				setMsg(data.responseText, 'danger');
+				window.location;
+			}
+		});
+	return false;
+};
+
+function onSubmitFormLogin(frm){
+	$.ajax({
+			type: 'POST',
+			url: 'login/',
+			data: frm.serialize(),
+			cache: false,
+			success: function (data) {
+				window.location = '/home/';
+			},
+			error: function(data) {
+				setMsg(data.responseText, 'danger');
+				window.location;
+			}
+		});
+	return false;
 };
 
 function onPesTitulos(){
+	var txtConteudo = $('#txtConteudo').val(),
+			parDados = '?filter_text=' + txtConteudo;
+	$.ajax({
+		type: 'POST',
+		url: window.location.href+parDados,
+		success: function (data) {
+			$('#results').html(data);
+		},
+		error: function(data) {
+			console.log ('passou no false')
+		}
+	});
+	return true;
+};
+
+/*
+	para pegar retorno json,pequisa intra telas
+function onPesTitulosOld(){
 	var txtTitulo = $('#txtTitulo').val(),
 		parAction = 'pestitulos/',
 		parDados = '?filter_text=' + txtTitulo
@@ -167,25 +190,4 @@ function onPesTitulos(){
 	});
 	return true;
 };
-
-
-function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie != '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = jQuery.trim(cookies[i]);
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-  return cookieValue;
-};
-
-function csrfSafeMethod(method) {
-    // these HTTP methods do not require CSRF protection
-    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-};
+*/

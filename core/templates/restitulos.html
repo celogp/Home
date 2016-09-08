@@ -1,0 +1,7 @@
+﻿<div class="ui divided selection list">
+	{% for tit in titulos %}
+		<a class="item" href="{%url 'frmtitulos' tit.id %}">
+			{{ tit.descricao }}
+		</a>
+	{% endfor %}
+</div>
